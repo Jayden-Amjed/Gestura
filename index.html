@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestura Programming Language</title>
+
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #121922;
+      --panel-2: #182231;
+      --text: #f4f7fb;
+      --muted: #a9b4c2;
+      --accent: #00e6a8;
+      --accent-2: #4da3ff;
+      --border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0, 230, 168, 0.18), transparent 35%),
+        radial-gradient(circle at top right, rgba(77, 163, 255, 0.18), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 15, 20, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav strong {
+      color: var(--accent);
+      font-size: 22px;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    header {
+      padding: 90px 8% 70px;
+      text-align: center;
+    }
+
+    header h1 {
+    font-size: 76px;
+    margin: 0;
+    letter-spacing: -2px;
+    color: var(--accent);
+    }
+
+    header p {
+      font-size: 22px;
+      color: var(--muted);
+      max-width: 780px;
+      margin: 18px auto 30px;
+    }
+
+    header img {
+        filter: drop-shadow(0 0 20px rgba(0, 230, 168, 0.4));
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 8px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #00110c;
+    }
+
+    .secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 45px 24px;
+    }
+
+    h2 {
+      font-size: 34px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: white;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(0, 230, 168, 0.13);
+      color: var(--accent);
+      font-size: 13px;
+      margin: 4px;
+      border: 1px solid rgba(0, 230, 168, 0.3);
+    }
+
+    pre {
+      background: #070a0f;
+      color: #8dffd8;
+      padding: 18px;
+      border-radius: 14px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    button {
+      background: var(--accent);
+      color: #00110c;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 14px;
+      text-align: left;
+    }
+
+    th {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .timeline {
+      border-left: 3px solid var(--accent);
+      padding-left: 22px;
+    }
+
+    .timeline p {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .notice {
+      border-left: 5px solid var(--accent-2);
+      background: rgba(77, 163, 255, 0.08);
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <strong>Gestura</strong>
+
+  <div style="display:flex; align-items:center; gap:15px;">
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#examples">Examples</a>
+    <a href="#run">Run</a>
+    <a href="#source">GitHub</a>
+
+  </div>
+</nav>
+
+<header>
+  <img src="logo.png" alt="Gestura Logo" style="width:150px; margin-bottom:20px;">
+  <h1>Gestura</h1>
+  <p>A gesture-based interpreted programming language</p>
+</header>
+
+<section id="about">
+  <h2>What is Gestura?</h2>
+  <div class="card">
+    <p>
+      Gestura is a custom programming language that uses hand gestures instead of traditional typed commands.
+      A webcam captures the user’s hand, MediaPipe tracks hand landmarks, and the interpreter converts
+      recognized gestures into programming commands.
+    </p>
+    <p>
+      The goal of Gestura is to explore programming as a more physical, visual, and interactive experience.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>How It Works</h2>
+  <div class="timeline">
+    <p><strong>1. Camera Input:</strong> OpenCV opens the webcam and captures live video.</p>
+    <p><strong>2. Hand Tracking:</strong> MediaPipe detects and tracks 21 hand landmarks.</p>
+    <p><strong>3. Gesture Recognition:</strong> Live hand data is compared to saved gesture samples in <code>gesture_data.csv</code>.</p>
+    <p><strong>4. Tokenization:</strong> Gestures become tokens like <code>SET</code>, <code>PRINT</code>, <code>NUMBER</code>, and <code>OK</code>.</p>
+    <p><strong>5. Parsing & Execution:</strong> Tokens are parsed into valid program structures and executed by the interpreter.</p>
+  </div>
+</section>
+
+<section id="features">
+  <h2>Current Features</h2>
+  <div class="grid">
+    <div class="card"><h3>Variables & Numbers</h3><p>Supports variables (x, y, z, w, v) and numeric input.</p></div>
+
+    <div class="card"><h3>Printing</h3><p>Print variables and strings using gesture commands.</p></div>
+
+    <div class="card"><h3>Loops</h3><p>Supports WHILE loops and iteration using END blocks.</p></div>
+
+    <div class="card"><h3>Conditionals</h3><p>Supports IF, ELIF, and ELSE statements.</p></div>
+
+    <div class="card"><h3>Operators</h3><p>Supports +, -, *, /, % and comparison operators.</p></div>
+
+    <div class="card"><h3>Increment/Decrement</h3><p>Supports INC and DEC operations on variables.</p></div>
+
+    <div class="card"><h3>Program Files</h3><p>Write and execute programs using .gestura files.</p></div>
+
+    <div class="card"><h3>Interpreter</h3><p>Runs programs using gestura_main.py.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Gesture Tokens</h2>
+  <table>
+    <tr>
+      <th>Gesture Token</th>
+      <th>Meaning</th>
+    </tr>
+    <tr><td>SET</td><td>Start variable assignment</td></tr>
+    <tr><td>PRINT</td><td>Start print command</td></tr>
+    <tr><td>NUMBER</td><td>Enter number input mode</td></tr>
+    <tr><td>ONE, TWO, THREE, FOUR, FIVE</td><td>Used as variables or number values</td></tr>
+    <tr><td>A-Z</td><td>Used to build printable strings</td></tr>
+    <tr><td>OK</td><td>Confirm or execute a command</td></tr>
+  </table>
+</section>
+
+<section id="examples">
+  <h2>Example Programs</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Program 1: Set a Variable</h3>
+      <pre>SET x = 5</pre>
+      <p><strong>Gesture sequence:</strong></p>
+      <pre>SET → ONE → NUMBER → FIVE → OK</pre>
+    </div>
+
+    <div class="card">
+      <h3>Program 2: Print a Variable</h3>
+      <pre>PRINT x</pre>
+      <p><strong>Gesture sequence:</strong></p>
+      <pre>PRINT → ONE → ONE</pre>
+    </div>
+
+    <div class="card">
+      <h3>Program 3: Print a String</h3>
+      <pre>PRINT "HELLO"</pre>
+      <p><strong>Gesture sequence:</strong></p>
+      <pre>PRINT → TWO → H → E → L → L → O → OK</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Complex Program</h3>
+    <pre id="complexCode">SET x = 5
+SET y = 10
+PRINT x
+PRINT y
+PRINT "DONE"</pre>
+    <button onclick="copyText('complexCode')">Copy Program</button>
+  </div>
+
+  <div class="card notice">
+    <h3>Program 5: FizzBuzz</h3>
+    <pre id="fizzCode">FOR i FROM 1 TO 15
+  IF i % 3 == 0 AND i % 5 == 0
+    PRINT "FIZZBUZZ"
+  ELSE IF i % 3 == 0
+    PRINT "FIZZ"
+  ELSE IF i % 5 == 0
+    PRINT "BUZZ"
+  ELSE
+    PRINT i</pre>
+    <button onclick="copyText('fizzCode')">Copy FizzBuzz Program</button>
+    <p>
+        This program demonstrates loops, conditionals, modulo operations, and incrementing
+        variables using Gestura syntax.
+    </p>
+  </div>
+</section>
+
+<section id="run">
+  <h2>How to Run Gestura</h2>
+  <div class="card">
+    <pre id="runCode">git clone https://github.com/Jayden-Amjed/Gestura.git
+cd Gestura
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install opencv-python mediapipe==0.10.13
+python gestura_live5.py
+python gestura_main.py fizz_buzz.gestura
+python gestura_main.py count_loop.gestura
+python gestura_main.py print_var.gestura</pre>
+    <button onclick="copyText('runCode')">Copy Setup Commands</button>
+  </div>
+</section>
+
+<section id="source">
+  <h2>Source Code</h2>
+  <div class="card">
+    <p>
+      The full interpreter, gesture recorder, recognizer, and dataset are available on GitHub.
+    </p>
+    <p>
+      <a href="https://github.com/Jayden-Amjed/Gestura" target="_blank">
+        View Gestura on GitHub
+      </a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>Gestura — CS 420 Final Project</p>
+</footer>
+
+<script>
+  function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
+  }
+</script>
+
+</body>
+</html>
