@@ -1,0 +1,9 @@
+SET(X, NUMBER(1)) OK
+WHILE(x <= 6) OK
+  IF(x % 2 == 0) OK
+    PRINT("EVEN") OK
+  ELSE OK
+    PRINT("ODD") OK
+  END
+  INC(X) OK
+END

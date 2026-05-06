@@ -1,0 +1,5 @@
+SET(X, NUMBER(5)) OK
+WHILE(x >= 1) OK
+PRINT(X) OK
+DEC(X) OK
+END
