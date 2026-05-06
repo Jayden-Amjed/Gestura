@@ -328,25 +328,32 @@
 
   <div class="card">
     <h3>Complex Program</h3>
-    <pre id="complexCode">SET x = 5
-SET y = 10
-PRINT x
-PRINT y
-PRINT "DONE"</pre>
+    <pre id="complexCode">SET(X, NUMBER(1)) OK
+    SET(Y, NUMBER(1)) OK
+    WHILE(x <= 5) OK
+      PRINT(Y) OK
+      INC(X) OK
+      INC(Y) OK
+    END
+</pre>
     <button onclick="copyText('complexCode')">Copy Program</button>
   </div>
 
   <div class="card notice">
     <h3>Program 5: FizzBuzz</h3>
-    <pre id="fizzCode">FOR i FROM 1 TO 15
-  IF i % 3 == 0 AND i % 5 == 0
-    PRINT "FIZZBUZZ"
-  ELSE IF i % 3 == 0
-    PRINT "FIZZ"
-  ELSE IF i % 5 == 0
-    PRINT "BUZZ"
-  ELSE
-    PRINT i</pre>
+    <pre id="fizzCode">SET(X, NUMBER(1)) OK
+    WHILE(x <= 15) OK
+    IF(x % 15 == 0) OK
+    PRINT("FIZZBUZZ") OK
+    ELIF(x % 3 == 0) OK
+    PRINT("FIZZ") OK
+    ELIF(x % 5 == 0) OK
+    PRINT("BUZZ") OK
+    ELSE OK
+    PRINT(X) OK
+    END
+    INC(X) OK
+    END</pre>
     <button onclick="copyText('fizzCode')">Copy FizzBuzz Program</button>
     <p>
         This program demonstrates loops, conditionals, modulo operations, and incrementing
