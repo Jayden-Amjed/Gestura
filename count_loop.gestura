@@ -1,0 +1,5 @@
+SET(X, NUMBER(1)) OK
+WHILE(x <= 5) OK
+PRINT(X) OK
+INC(X) OK
+END

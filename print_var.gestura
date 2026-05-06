@@ -1,0 +1,2 @@
+SET(X, NUMBER(3)) OK
+PRINT(X) OK

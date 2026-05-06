@@ -1,5 +1,7 @@
 import csv
 import math
+import sys
+import re
 import time
 import cv2
 import mediapipe as mp
@@ -286,7 +288,7 @@ class GesturaRuntime:
                 python_line = f"{self.selected_variable} = {self.number_total}"
 
                 self.gestura_code_lines.append(("    " * indent) + gestura_line)
-                self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+                #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
                 self.message = f"Added command: {gestura_line}"
 
@@ -314,7 +316,7 @@ class GesturaRuntime:
                 python_line = f'{self.selected_variable} = "{self.string_buffer}"'
 
                 self.gestura_code_lines.append(("    " * indent) + gestura_line)
-                self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+                #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
                 self.message = f"Added command: {gestura_line}"
 
@@ -352,7 +354,7 @@ class GesturaRuntime:
             python_line = f"print({variable_name})"
 
             self.gestura_code_lines.append(("    " * indent) + gestura_line)
-            self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+            #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
             self.message = f"Added command: {gestura_line}"
             self.reset_current_input()
@@ -379,7 +381,7 @@ class GesturaRuntime:
             python_line = f'print("{self.string_buffer}")'
 
             self.gestura_code_lines.append(("    " * indent) + gestura_line)
-            self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+            #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
             self.message = f"Added command: {gestura_line}"
             self.string_buffer = ""
@@ -412,7 +414,7 @@ class GesturaRuntime:
 
                 indent = max(0, self.current_indent() - 1)
                 self.gestura_code_lines.append(("    " * indent) + "ELSE OK")
-                self.gestura_code_lines.append(("    " * indent) + "Python: else:")
+                #self.gestura_code_lines.append(("    " * indent) + "Python: else:")
 
                 self.message = "Added ELSE statement."
                 self.reset_current_input()
@@ -545,7 +547,7 @@ class GesturaRuntime:
                 python_line = f"# for loop condition: {condition}"
 
             self.gestura_code_lines.append(("    " * indent) + gestura_line)
-            self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+            #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
             self.message = f"Added loop header: {gestura_line}"
 
@@ -564,7 +566,7 @@ class GesturaRuntime:
             python_line = f"{self.condition_context.lower()} {condition}:"
 
             self.gestura_code_lines.append(("    " * indent) + gestura_line)
-            self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+            #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
             self.message = f"Added {self.condition_context} statement: {gestura_line}"
 
@@ -601,7 +603,7 @@ class GesturaRuntime:
 
             indent = self.current_indent()
             self.gestura_code_lines.append(("    " * indent) + gestura_line)
-            self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
+            #self.gestura_code_lines.append(("    " * indent) + "Python: " + python_line)
 
             self.message = f"Added command: {gestura_line}"
             self.reset_current_input()
@@ -826,7 +828,7 @@ def draw_top_status(frame, lines):
             frame,
             line,
             (10, y),
-            cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.FONT_HERSHEY_COMPLEX,
             0.7,
             (0, 255, 0),
             2,
@@ -841,7 +843,7 @@ def draw_bottom_detection(frame, detected, distance_value):
         frame,
         f"Detected: {detected}",
         (10, h - 55),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.7,
         (0, 255, 0),
         2,
@@ -851,7 +853,7 @@ def draw_bottom_detection(frame, detected, distance_value):
         frame,
         f"Distance: {distance_value:.3f}",
         (10, h - 25),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.7,
         (0, 255, 0),
         2,
@@ -865,7 +867,7 @@ def draw_code_window(runtime):
         canvas,
         "Gestura Code",
         (20, 45),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         1.0,
         (0, 255, 255),
         2,
@@ -875,7 +877,7 @@ def draw_code_window(runtime):
         canvas,
         "Code being built:",
         (20, 90),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.7,
         (255, 255, 255),
         2,
@@ -888,7 +890,7 @@ def draw_code_window(runtime):
             canvas,
             "No code written yet.",
             (20, y),
-            cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.FONT_HERSHEY_COMPLEX,
             0.75,
             (180, 180, 180),
             2,
@@ -899,7 +901,7 @@ def draw_code_window(runtime):
                 canvas,
                 line,
                 (20, y),
-                cv2.FONT_HERSHEY_SIMPLEX,
+                cv2.FONT_HERSHEY_COMPLEX,
                 0.62,
                 (0, 255, 0),
                 2,
@@ -910,7 +912,7 @@ def draw_code_window(runtime):
         canvas,
         "Use EXECUTE gesture to run program.",
         (20, 565),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.65,
         (255, 255, 255),
         2,
@@ -926,7 +928,7 @@ def draw_output_window(runtime):
         canvas,
         "Interpreted Output",
         (20, 45),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         1.0,
         (0, 255, 255),
         2,
@@ -936,7 +938,7 @@ def draw_output_window(runtime):
         canvas,
         "Output appears after EXECUTE:",
         (20, 90),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.7,
         (255, 255, 255),
         2,
@@ -949,7 +951,7 @@ def draw_output_window(runtime):
             canvas,
             "No output yet.",
             (20, y),
-            cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.FONT_HERSHEY_COMPLEX,
             0.75,
             (180, 180, 180),
             2,
@@ -960,7 +962,7 @@ def draw_output_window(runtime):
                 canvas,
                 str(line),
                 (20, y),
-                cv2.FONT_HERSHEY_SIMPLEX,
+                cv2.FONT_HERSHEY_COMPLEX,
                 0.8,
                 (0, 255, 0),
                 2,
@@ -971,13 +973,108 @@ def draw_output_window(runtime):
         canvas,
         f"Variables after run: {runtime.variables}",
         (20, 565),
-        cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.FONT_HERSHEY_COMPLEX,
         0.65,
         (255, 255, 255),
         2,
     )
 
     cv2.imshow("Interpreted Output", canvas)
+    
+def parse_gestura_file(filename):
+    commands = []
+
+    with open(filename, "r") as file:
+        lines = file.readlines()
+
+    for line in lines:
+        line = line.strip()
+
+        if not line or line.startswith("#") or line.startswith("Python:"):
+            continue
+
+        if line == "END":
+            commands.append({"type": "END"})
+
+        elif line == "ELSE OK":
+            commands.append({"type": "ELSE"})
+
+        elif line.startswith("SET("):
+            match_number = re.match(r'SET\(([A-Z]), NUMBER\((\d+)\)\) OK', line)
+            match_string = re.match(r'SET\(([A-Z]), STRING\("(.*)"\)\) OK', line)
+
+            if match_number:
+                var = match_number.group(1).lower()
+                value = int(match_number.group(2))
+                commands.append({"type": "SET", "variable": var, "value": value})
+
+            elif match_string:
+                var = match_string.group(1).lower()
+                value = match_string.group(2)
+                commands.append({"type": "SET", "variable": var, "value": value})
+
+        elif line.startswith("PRINT("):
+            match_var = re.match(r'PRINT\(([A-Z])\) OK', line)
+            match_string = re.match(r'PRINT\("(.*)"\) OK', line)
+
+            if match_var:
+                var = match_var.group(1).lower()
+                commands.append({"type": "PRINT_VAR", "variable": var})
+
+            elif match_string:
+                value = match_string.group(1)
+                commands.append({"type": "PRINT_STRING", "value": value})
+
+        elif line.startswith("WHILE("):
+            condition = line.replace("WHILE(", "").replace(") OK", "")
+            commands.append({
+                "type": "LOOP_START",
+                "loop_type": "WHILE",
+                "condition": condition,
+            })
+
+        elif line.startswith("IF("):
+            condition = line.replace("IF(", "").replace(") OK", "")
+            commands.append({
+                "type": "IF_START",
+                "condition": condition,
+            })
+
+        elif line.startswith("ELIF("):
+            condition = line.replace("ELIF(", "").replace(") OK", "")
+            commands.append({
+                "type": "ELIF_START",
+                "condition": condition,
+            })
+
+        elif line.startswith("INC("):
+            match = re.match(r'INC\(([A-Z])\) OK', line)
+            if match:
+                commands.append({
+                    "type": "INC_DEC",
+                    "variable": match.group(1).lower(),
+                    "operator": "++",
+                })
+
+        elif line.startswith("DEC("):
+            match = re.match(r'DEC\(([A-Z])\) OK', line)
+            if match:
+                commands.append({
+                    "type": "INC_DEC",
+                    "variable": match.group(1).lower(),
+                    "operator": "--",
+                })
+
+    return commands
+
+
+def run_gestura_file(filename):
+    runtime = GesturaRuntime()
+    runtime.program_commands = parse_gestura_file(filename)
+    runtime.execute_program()
+
+    for line in runtime.output_lines:
+        print(line)
 
 
 def main():
@@ -1066,4 +1163,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1:
+        run_gestura_file(sys.argv[1])
+    else:
+        main()
