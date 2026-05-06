@@ -1,0 +1,7 @@
+SET(X, NUMBER(1)) OK
+SET(Y, NUMBER(1)) OK
+WHILE(x <= 5) OK
+  PRINT(Y) OK
+  INC(X) OK
+  INC(Y) OK
+END
